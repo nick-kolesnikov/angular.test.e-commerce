@@ -1,0 +1,56 @@
+:host
+  display: flex
+  flex-direction: column
+  align-items: center
+  height: 100%
+  box-sizing: border-box
+  padding: 16px 0
+
+.controls
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 70%
+  
+  @media (max-width: 600px)
+    &
+      flex-direction: column
+
+.search
+  display: flex
+  width: 70%
+  margin-right: 32px
+
+  @media (max-width: 600px)
+    &
+      width: 85%
+      margin: 0
+
+  .mat-form-field
+    flex-grow: 1
+
+.clear-search-history
+  width: 100%
+  text-align: right
+
+.product-list
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  overflow-y: auto
+
+.cdk-virtual-scroll-viewport
+  @media (max-width: 600px)
+    &
+      width: 100%
+      flex-grow: 1
+
+.mat-paginator
+  margin-top: 16px
+
+.mat-progress-bar
+  margin: 32px
+  width: auto
+
+.mat-spinner
+  margin: auto

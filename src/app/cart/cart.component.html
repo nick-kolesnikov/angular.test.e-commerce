@@ -1,0 +1,100 @@
+<h2 mat-dialog-title>Shopping Cart</h2>
+<mat-dialog-content>
+  <div class="content mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Item</th>
+        <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+        <td mat-footer-cell *matFooterCellDef>Total</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="align-center"
+        >
+          Price
+        </th>
+        <td mat-cell *matCellDef="let product" class="align-center">
+          {{ product.price | currency }}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="align-center"
+        >
+          Amount
+        </th>
+        <td mat-cell *matCellDef="let product" class="align-center">
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="product.amount"
+            (change)="updateCart(product)"
+            min="1"
+            class="amount-input"
+          />
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="cost">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="align-center"
+        >
+          Cost
+        </th>
+        <td mat-cell *matCellDef="let product" class="align-center">
+          {{ product.cost | currency }}
+        </td>
+        <td mat-footer-cell *matFooterCellDef class="align-center">
+          {{ getTotalCost() | currency }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let product" class="align-center">
+          <button mat-icon-button color="warn" (click)="delete(product.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+    </table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button
+    mat-raised-button
+    color="warn"
+    [mat-dialog-close]="true"
+    (click)="clear()"
+  >
+    Clear
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    (click)="checkout()"
+  >
+    Checkout
+  </button>
+</mat-dialog-actions>

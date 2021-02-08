@@ -1,0 +1,45 @@
+<mat-toolbar>
+  <button mat-icon-button (click)="sidebar.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <button mat-button routerLink="/products">Best Buy Clone</button>
+  <span class="spacer"></span>
+  <button
+    mat-mini-fab
+    color="primary"
+    class="cart-button"
+    [matBadge]="cartService.cartBadge | async"
+    matBadgeColor="accent"
+    matBadgeSize="small"
+    matBadgePosition="before"
+    [disabled]="(cartService.cartBadge | async) === 0"
+    (click)="openCart()"
+  >
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+  <ng-container class="user-info" *ngIf="currentUser">
+    <button mat-button [matMenuTriggerFor]="menu" class="user-info">
+      <mat-icon>person</mat-icon> {{ currentUser!.name }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="orders">Order List</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </ng-container>
+  <button mat-raised-button (click)="showLoginModal()" *ngIf="!currentUser">
+    Login
+  </button>
+</mat-toolbar>
+<mat-sidenav-container [hasBackdrop]="true">
+  <mat-sidenav
+    #sidebar
+    [mode]="isHandset ? 'over' : 'side'"
+    [fixedInViewport]="isHandset"
+    fixedTopGap="56"
+  >
+    <app-category-tree (click)="sidebar.close()"></app-category-tree>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

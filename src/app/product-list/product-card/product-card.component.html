@@ -1,0 +1,18 @@
+<mat-card
+  class="product-card mat-elevation-z8"
+  (click)="navigateToProductDetails()"
+>
+  <mat-card-content class="content">
+    <img [src]="product.image" />
+    <h2>{{ product.name }}</h2>
+    <div class="additional-info">
+      <span class="quantity">{{
+        outOfStock ? "Out of stock" : product.quantity + " available"
+      }}</span>
+      <span class="price">{{ product.price | currency }}</span>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="buy($event)">BUY</button>
+  </mat-card-actions>
+</mat-card>

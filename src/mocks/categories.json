@@ -1,0 +1,84 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Herbs",
+      "parent": 4
+    },
+    {
+      "id": 2,
+      "name": "Meat",
+      "parent": 4
+    },
+    {
+      "id": 3,
+      "name": "Drinks",
+      "parent": 0
+    },
+    {
+      "id": 4,
+      "name": "Grocery",
+      "parent": 0
+    },
+    {
+      "id": 5,
+      "name": "Seeds",
+      "parent": 0
+    },
+    {
+      "id": 6,
+      "name": "Vegetables",
+      "parent": 4
+    },
+    {
+      "id": 7,
+      "name": "Alcohol",
+      "parent": 3
+    },
+    {
+      "id": 8,
+      "name": "Non-alcohol",
+      "parent": 3
+    },
+    {
+      "id": 9,
+      "name": "Seafood",
+      "parent": 4
+    },
+    {
+      "id": 10,
+      "name": "Milk",
+      "parent": 4
+    },
+    {
+      "id": 11,
+      "name": "Dishes",
+      "parent": 0
+    },
+    {
+      "id": 12,
+      "name": "Cheese",
+      "parent": 4
+    },
+    {
+      "id": 13,
+      "name": "Other",
+      "parent": 0
+    },
+    {
+      "id": 14,
+      "name": "Wine",
+      "parent": 7
+    },
+    {
+      "id": 15,
+      "name": "Syrup",
+      "parent": 7
+    },
+    {
+      "id": 16,
+      "name": "Fruits",
+      "parent": 4
+    }
+  ]
+}

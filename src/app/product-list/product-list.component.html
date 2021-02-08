@@ -1,0 +1,72 @@
+<div class="controls">
+  <div class="search">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input
+        type="text"
+        placeholder="Text to find"
+        matInput
+        [formControl]="searchControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="suggestionSelected($event)"
+      >
+        <ng-container *ngIf="isSearchHistoryInUse">
+          <button mat-button (click)="clearSearchHistory()" class="clear-search-history">
+            Clear search history
+          </button>
+          <mat-option
+            *ngFor="let option of getSearchHistory()"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </ng-container>
+        <ng-container *ngIf="!isSearchHistoryInUse">
+          <mat-option
+            *ngFor="let product of suggestedProducts | async"
+            [value]="product"
+          >
+            {{ product.name }}
+          </mat-option>
+        </ng-container>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button mat-icon-button (click)="search()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <h3 *ngIf="products.length > 1">
+    Sort by:
+    <button mat-raised-button (click)="toggleSorting()">
+      Price <mat-icon>{{ ascSorting.value ? "north" : "south" }}</mat-icon>
+    </button>
+  </h3>
+</div>
+<div class="product-list" *ngIf="!isHandset && !isLoading">
+  <app-product-card
+    *ngFor="let product of products"
+    [product]="product"
+  ></app-product-card>
+</div>
+<cdk-virtual-scroll-viewport #scroller [itemSize]="productCardHeight">
+  <app-product-card
+    *cdkVirtualFor="let product of products"
+    [product]="product"
+  ></app-product-card>
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+</cdk-virtual-scroll-viewport>
+<mat-paginator
+  *ngIf="!isHandset && !isLoading"
+  [length]="total"
+  [pageSize]="pageSize.value"
+  [pageSizeOptions]="[5, 10, 20]"
+  [pageIndex]="pageIndex.value"
+  showFirstLastButtons="true"
+  (page)="pageChange($event)"
+>
+</mat-paginator>
+<mat-spinner *ngIf="!isHandset && isLoading"></mat-spinner>

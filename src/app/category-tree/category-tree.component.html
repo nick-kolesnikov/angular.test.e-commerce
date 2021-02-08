@@ -1,0 +1,41 @@
+<ng-container *ngIf="!isLoading; else loading">
+  <a
+    mat-button
+    routerLink="/products"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="mat-warn"
+    >All</a
+  >
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <a
+        mat-button
+        routerLink="/products"
+        [queryParams]="{ category: node.id }"
+        routerLinkActive="mat-warn"
+        >{{ node.name }}</a
+      >
+    </mat-tree-node>
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasChild"
+      matTreeNodePadding
+    >
+      <button mat-icon-button matTreeNodeToggle>
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+        </mat-icon>
+      </button>
+      <a
+        mat-button
+        routerLink="/products"
+        [queryParams]="{ category: node.id }"
+        routerLinkActive="mat-warn"
+        >{{ node.name }}</a
+      >
+    </mat-tree-node>
+  </mat-tree>
+</ng-container>
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
