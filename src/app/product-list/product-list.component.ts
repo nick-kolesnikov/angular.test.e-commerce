@@ -70,9 +70,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
         this.isHandset = matches;
         this.pageIndex.next(0);
         this.pageSize.next(10);
-        if (this.isHandset && this.scroller) {
-          this.scroller.scrollTo({ top: 0 });
-        }
+        this.clearListForMobile();
       });
   }
 
@@ -84,7 +82,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       this.pageIndex.pipe(distinctUntilChanged()),
     ])
       .pipe(
-        throttleTime(200),
+        debounceTime(300),
         tap(() => (this.isLoading = true)),
         switchMap(([params, ascSorting, pageSize, pageIndex]) =>
           this.productsService.getProductList(
@@ -139,7 +137,9 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   }
 
   toggleSorting(): void {
+    this.clearListForMobile();
     this.ascSorting.next(!this.ascSorting.value);
+    this.pageIndex.next(0);
   }
 
   pageChange({ pageSize, pageIndex }: PageEvent): void {
@@ -155,19 +155,27 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  search() {
+  search(): void {
     this.searchHistory.add(this.searchControl.value);
+    this.clearListForMobile();
     this.router.navigate([], {
       queryParams: { search: this.searchControl.value },
       queryParamsHandling: 'merge',
     });
   }
 
-  getSearchHistory() {
+  getSearchHistory(): string[] {
     return [...this.searchHistory.values()];
   }
 
-  clearSearchHistory() {
+  clearSearchHistory(): void {
     this.searchHistory.clear();
+  }
+
+  private clearListForMobile(): void {
+    if (this.isHandset && this.scroller) {
+      this.products = [];
+      this.scroller.scrollTo({ top: 0 });
+    }
   }
 }
