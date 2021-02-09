@@ -139,7 +139,6 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   toggleSorting(): void {
     this.clearListForMobile();
     this.ascSorting.next(!this.ascSorting.value);
-    this.pageIndex.next(0);
   }
 
   pageChange({ pageSize, pageIndex }: PageEvent): void {
@@ -156,8 +155,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   }
 
   search(): void {
-    this.searchHistory.add(this.searchControl.value);
     this.clearListForMobile();
+    this.searchHistory.add(this.searchControl.value);
     this.router.navigate([], {
       queryParams: { search: this.searchControl.value },
       queryParamsHandling: 'merge',
@@ -175,6 +174,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   private clearListForMobile(): void {
     if (this.isHandset && this.scroller) {
       this.products = [];
+      this.pageIndex.next(0);
       this.scroller.scrollTo({ top: 0 });
     }
   }
